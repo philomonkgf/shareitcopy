@@ -1,0 +1,67 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'image_post/user_posted.css'%}">
+    <title></title>
+</head>
+<body>
+
+    <a href="{% url 'index'%}"> <i class="fa fa-home" style="font-size:38px;color:white" ></i></a>
+    <div id="column">
+      
+   
+    <div id="one">
+       
+   
+
+    <div id="h">
+        <img src="{{user.name.bio.url}}" id="i">
+        <h4> Username: {{user.name.username}}</h4>
+        <h4>Email address: {{user.name.email}}</h4>
+        <h4>First Name:{{user.name.first_name}}</h4>
+        <h4>Last name:{{user.name.last_name}}</h4>
+        <br>
+    </div>
+
+    <!-- {%if request.user.user == user.name.user %}
+    <div id='user_button'>
+        <button> <a href="{% url 'edit_user'%}">Edit Profile</a> </button>&nbsp <button><a href="{% url 'change_password'%}">Change Password</a></button></div>
+{%endif%}
+</div> -->
+
+
+</div>
+
+
+<div id="o">
+
+{%for post in posted%}
+<div id="ones">
+<a href="{% url 'view_post' post.id%}">
+<div>{{post.post}}</div>
+<div><img src="{{post.post_image.url }}" width="150px" height="150px"></div>
+</div>
+</a>
+
+{%endfor%}
+ 
+</div>
+
+
+    </div>
+
+
+
+
+
+</body>
+
+
+
+
+
+</html>

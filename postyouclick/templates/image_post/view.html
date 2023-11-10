@@ -1,0 +1,54 @@
+{%load static%}
+<html>
+    <head>
+        <link rel="stylesheet" href="{%static 'image_post/viewstyle.css'%}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title></title>
+
+     
+
+
+
+
+    </head>
+    <body>
+     
+<div id="view">
+    <a href="{% url 'index'%}"> <i class="fa fa-home" style="font-size:48px;color:white"></i></a>
+   
+
+<div><h1>{{user.post | title}}</h1></div>
+
+
+
+<div><img src="{{user.post_image.url }}"  width= "500px"; height="500px"> </div><br><hr>
+
+
+
+<div id="about">
+
+<div>{{user.about_post}}</div></div><br>
+
+
+<div>@{{user.name.username}}</div>
+<div>{{user.date_of_edit | timesince}} ago</div>
+
+
+</div>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,251 @@
+{%extends 'image_post/layout.html'%}
+
+{%block body%}
+<style>
+    body {
+        
+        background-image: linear-gradient(to right, #fc5c7d, #6a82fb);
+        font-style: italic;
+        color: white;
+        padding: 0px;
+        margin: 0px;
+        
+    }
+
+    #search_bar{
+        border: none;
+        width: 200px;
+        height: 30px;
+        border-radius: 20px ;
+        background-color: #f7f5f4;
+        text-align: center;
+        
+    }
+
+    #bb{
+        padding-left: 20px;
+       
+        
+      
+    }
+
+    #fo{
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 10px;
+       
+    }
+    .inner-text{
+        height: 450px;
+    }  
+
+    img{
+        border-radius: 15px 15px 0px 0px;
+    }
+   #hr{
+      background-image: linear-gradient(90deg, rgb(104, 95, 235), transparent);
+      height: 2px;
+      border: 0;
+   }
+
+
+#delete, #edit{
+    border: 1px solid rgb(255, 255, 255);
+    box-shadow: 3px 3px 3px ;
+    padding: 5px;
+    border-radius: 10px;
+    
+  
+
+
+}
+
+#delete:hover{
+    transform: scale(1.09);
+    background-color: red;
+    border: 2px solid ;
+    color: white;
+}
+
+
+#edit:hover{
+    transform: scale(1.09);
+    background-color: rgb(39, 22, 190);
+    border: 2px solid ;
+    color: white;
+   
+}
+
+
+#post{
+    font-size: large;
+    font-family: URW Chancery L, cursive;
+}
+
+/*    Small devices (landscape phones,   */
+@media (max-width: 575.98px){
+    #outerloop{
+        
+        justify-content: center;
+    }
+    
+}
+
+/*    Small devices (landscape phones,   */
+@media (min-width: 576px) and (max-width: 767.98px){
+    #outerloop{
+        justify-content: center;
+    }
+    
+}
+
+/*  Medium devices (tablets, */
+@media (min-width: 768px) and (max-width: 991.98px){
+    #outerloop{
+        justify-content: center;
+    }  
+
+}
+
+/* Large devices (desktops,*/
+@media (min-width: 992px) and (max-width: 1199.98px){
+    #outerloop{
+        justify-content: center;
+    }
+    
+  
+}
+
+
+@media (min-width: 1200px){
+  
+}
+
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<!-- NAVBAR --> 
+<div id="navbar"> 
+<!-- <div><a  href="{% url 'user_posted' request.user.id%}">Hello {{request.user.username}}</a>  </div> -->
+
+<div><a  href="{% url 'user_profile_views' %}">Hello {{request.user.username}}</a>  </div>
+
+
+<div><a href="{% url 'add_post'%}">Add Post</a></div>
+<div><a href="{% url 'logout'%}">Logout</a></div>
+
+
+<div><form method="Get">
+    <input type="search" name="q" placeholder="Search" id="search_bar">
+</form>
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+<!-- -------------------------------------------------------------------------- -->
+
+
+
+<!---------------------- CARD--------------- -->
+<div  id="outerloop">
+
+{%for task in allimage %}
+
+<div id="innerloop">
+
+
+
+<div class="inner-text">
+<a href="{% url 'view_post' task.id %}">    
+    <div id="imgs"><img src="{{task.post_image.url}}" style="width: 300px;" height="250px";></div>
+
+
+
+<!-- TEXT -->
+<div id="inner_text">
+<div id="post">{{task.post | title}}</div>
+<div><p>{{task.about_post|truncatewords:20}}</p></div>
+<div style="font-size: small;">{{task.date_of_edit| timesince}} ago</div></a>
+<div> <a href="{% url 'user_posted' task.name.id%}">@{{task.name.username}}</a></div>
+</div><br>
+</div><hr id="hr">
+<!--  -->
+
+
+<!-- <div style="color: #0f0f0f;">{{task.like.all}}</div> -->
+
+
+
+
+
+
+
+
+
+
+    <div id="fo">
+
+        <span style="color: #0a0a0a;"> {{task.total_likes}}&nbsp</span>  
+        
+
+{% if request.user in  task.like.all%}
+    <form method="POST" action="{% url 'like_user' task.id%}">
+        {%csrf_token%}
+         <button type="submit" style="color:#0a0a0a;" id="like"><i class="fa fa-thumbs-up fa-lg" style="color: #7a08fd;"></i></button>
+    </form> &nbsp
+
+    {%endif%}
+  
+    {% if request.user not in  task.like.all%}
+    <form method="POST" action="{% url 'like_user' task.id%}">
+        {%csrf_token%}
+        <button type="submit" style="color:#0c0c0c;" id="like"><i class="fa fa-thumbs-up fa-lg" ></i></button>
+    </form> 
+    
+    {%endif%}
+   
+    
+    
+    
+
+
+<!-- USER AUTH -->
+
+{%if request.user.id == task.name.id%}
+<div id="bb" style="color: #0a0a0a;">
+<a href="{% url 'edit_post' task.id %}" id="edit">Edit</a>&nbsp &nbsp
+
+<a href="{% url 'delete_post' task.id %}" id="delete">Delete</a></div>
+
+
+
+
+
+{%endif%}
+    </div>
+
+<!-- ----------------- -->
+</div>
+
+
+{%endfor%}
+
+
+
+</div>
+
+
+
+{%endblock%}
+
+
